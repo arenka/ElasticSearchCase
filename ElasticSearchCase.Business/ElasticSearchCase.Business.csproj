@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\ElasticSearchCase.DataAccess\ElasticSearchCase.DataAccess.csproj" />
+    <ProjectReference Include="..\ElasticSearchCase.Entities\ElasticSearchCase.Entities.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="ElasticSearchOptions\Configurations\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+    <PackageReference Include="NEST" Version="7.13.2" />
+  </ItemGroup>
+
+</Project>

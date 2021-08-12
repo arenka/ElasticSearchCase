@@ -1,0 +1,16 @@
+﻿@model ProductListViewModel
+
+@foreach (var product in Model.Products)
+{
+
+    <div class="d-flex flex-row justify-content-between mb-3">
+        <div class="d-flex flex-column p-3">
+            <p class="mb-1">@product.ProductName</p> @*<small class="text-muted">8 days remaining</small>*@
+        </div>
+        <div class="price pt-3 pl-3 text-right">
+            <span class="mb-2">Fixed</span>
+            <h5><span>&dollar;</span> @product.Price</h5>
+        </div>
+    </div>
+    <hr />
+}

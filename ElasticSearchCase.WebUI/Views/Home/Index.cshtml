@@ -1,0 +1,112 @@
+﻿@model ProductListViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    @*<p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>*@
+    <button type="button" id="openModal" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+        Add Product
+    </button>
+
+</div>
+
+<div class="container d-flex justify-content-center">
+    <div class="card mt-5 p-4">
+        <div class="input-group mb-3">
+            <input id="txtSearchVal" type="text" name="query" class="form-control">
+            <div class="input-group-append"><button id="SearchWithQuery" class="btn btn-primary"><i class="fas fa-search"></i></button></div>
+        </div>
+
+        <div id="productList"></div>
+
+    </div>
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label class="col-md-4">Product Name : </label>
+                        <input type="text" id="txtProductName" />
+                    </div>
+                    <div class="form-group">
+                        <label class="col-md-4">Product Price : </label>
+                        <input type="text" id="txtProductPrice" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" id="saveButton" class="btn btn-primary">Save</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#openModal").click(function () {
+            $('#addProductModal').modal('show');
+        });
+        $('#txtProductPrice').keypress(function (e) {
+            var charCode = (e.which) ? e.which : event.keyCode
+            if (String.fromCharCode(charCode).match(/[^0-9]/g))
+                return false;
+        });
+        $("#productList").load("@Url.Action("GetProductList", "Home")");
+
+    });
+    $("#SearchWithQuery").click(function () {
+        searchClick();
+    });
+    $('#txtSearchVal').keypress(function (e) {
+        var key = e.which;
+        if (key == 13)
+            searchClick();
+    });
+
+    function searchClick() {
+        var value = $("#txtSearchVal").val();
+        console.log(value);
+        var url = "@Url.Action("SearchWithQuery", "Home", new { query = "value" })";
+        url = url.replace("value", value);
+        $("#productList").load(url);
+    }
+     $("#saveButton").click(function () {
+            var pName = $("#txtProductName").val();
+            var pPrice = $("#txtProductPrice").val();
+
+            var product = {
+                ProductName : pName,
+                Price : pPrice
+            };
+
+         $.ajax({
+             url: "@Url.Action("AddProduct", "Home")",
+             type: "post",
+             dataType: "json",
+             data: product,
+             success: function (data) {
+                 if (data.status) {
+                     $('#addProductModal').modal('hide');
+                     $("#productList").load("@Url.Action("GetProductList", "Home")");
+                 }
+             }
+            });
+        });
+
+</script>
