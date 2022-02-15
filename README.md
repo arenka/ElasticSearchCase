@@ -19,7 +19,6 @@ Requirements :
 Firstly, open the tools -> nuget package manager -> package manager console in visual studio. While the default project is in the ElasticSearchCase.DataAccess layer, create the database by writing update-database on the console screen.
 Make sure Elasticsearch is installed or running on your computer. If it is not installed, you can download and install it from https://www.elasticsearch.co/downloads/elasticsearch. If it is installed, you can check that it is working from the localhost:9200 port.
  
-You will see a screen like the one above. Version information may change.
 For the project to work, MySql database or wampserver must be installed on your computer. After making sure it is installed and running, right click on the ElasticSearchCase.WebUI layer and set it as set as startup project and you are ready to run the project.
 After adding the product, the attached data in the database will be listed.
 Kibana can be used for monitoring. I viewed my index and documents with the chrome elastic head plugin.
